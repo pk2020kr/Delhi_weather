@@ -45,3 +45,11 @@ y.head()
 
 y = avg_year['1998':'2010':4]  # y = avg_year['1997-12-31':'2016-12-31': Gap]
 y
+
+# Bar graph (Temp v/s Months)
+plt.figure(figsize= (24,8))
+sns.barplot(x=avg_month.index, y=avg_month['temp'])
+
+m = avg_month['2002-01-01':'2002-12-31'] # After slicing you can see spacific years
+plt.figure(figsize= (24,8))
+sns.barplot(x=m.index, y=m['temp'])
