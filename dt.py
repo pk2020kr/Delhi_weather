@@ -178,3 +178,29 @@ plt.xlabel('Day')
 plt.ylabel('Temperature(C)')
 plt.title('Temperature in Delhi from 1996 to 2017 w.r.t Year(in X-axis)')
 sns.lineplot(x=avg_year.index, y=avg_year['temp'])
+
+avg_year = avg_year['1997':'2016']  
+plt.figure(figsize= (24,8))
+sns.lineplot(x=avg_year.index, y=avg_year['temp'])
+
+# Daily MAX, Daily Average, Daily MIN (TENPERATURE)
+
+# Resample the data to daily frequency and calculate the maximum temperature for each day
+daily_max = data.resample('d').max()
+daily_max.head(4)
+
+daily_avg = data.resample('d').mean()
+daily_avg.head(4)
+
+daily_min = data.resample('d').min()
+daily_min.head(4)
+
+plt.figure(figsize=(24, 8))
+plt.plot(daily_max.index, daily_max, label='Max Temp')
+plt.plot(daily_avg.index, daily_avg, label='Avg Temp')
+plt.plot(daily_min.index, daily_min, label='Min Temp')
+# Labels and title
+plt.xlabel('Day')
+plt.ylabel('Temperature(C)')
+plt.title('Max, Average, and Min Daily Temperatures in Delhi (1997-2016) w.r.t Day(in X-axis)')
+plt.legend()
