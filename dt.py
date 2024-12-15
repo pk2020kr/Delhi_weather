@@ -204,3 +204,77 @@ plt.xlabel('Day')
 plt.ylabel('Temperature(C)')
 plt.title('Max, Average, and Min Daily Temperatures in Delhi (1997-2016) w.r.t Day(in X-axis)')
 plt.legend()
+
+
+# Heat_map of Average Tempearture of day in Delhi from 1996 to 2017
+df = pd.read_csv('testsetf.csv') # Load the dataset
+df.head (2)                      # Display the first two rows of the dataframe
+# A function to extract the month part from the datetime string
+def get_month(x):
+  return x[4:6]
+# Create a new column 'month' by applying the get_month function to 'datetime_utc'
+df['month'] = df['datetime_utc'].apply(lambda x: get_month(str(x)))
+df['month']#.head (4)
+# A function to extract the day part from the datetime string
+def get_day(x):
+  return x[6:8]
+# Create a new column 'day' by applying the get_day function to 'datetime_utc'
+df['day'] = df['datetime_utc'].apply(lambda x: get_day(str(x)))
+df['day'].head(2)
+# Create a new column 'month' by applying the get_month function to 'datetime_utc'  & similarly day
+temp_month = pd.crosstab(df['month'], df['day'], values=df['_tempm'], aggfunc='min')
+temp_day = pd.crosstab(df['day'], df['day'], values=df['_tempm'], aggfunc='min')
+plt.figure(figsize=(24, 10)) # Plot the heatmap for average temperature by month and day
+sns.heatmap(temp_month, cmap='viridis', annot=True)
+plt.title("Minmum Daily Temperature in Delhi (1996-2017)")
+plt.show()
+
+df = pd.read_csv('testsetf.csv')  # Load the dataset
+def get_month(x):  # A function to extract the month part from the datetime string
+  return x[4:6]
+def get_day(x):    # A function to extract the day part from the datetime string
+  return x[6:8]
+# Create a new column 'day' by applying the get_day function to 'datetime_utc'
+df['day'] = df['datetime_utc'].apply(lambda x: get_day(str(x)))
+# Create a new column 'month' by applying the get_month function to 'datetime_utc'
+df['month'] = df['datetime_utc'].apply(lambda x: get_month(str(x)))
+# Create a crosstab to compute the average temperature ('_tempm') for each month and day
+temp_month = pd.crosstab(df['month'], df['day'], values=df['_tempm'], aggfunc='mean')
+# Create a crosstab to compute the average temperature ('_tempm') for each day
+temp_day = pd.crosstab(df['day'], df['day'], values=df['_tempm'], aggfunc='mean')
+# Plot the heatmap for average temperature by month and day
+plt.figure(figsize=(24, 10))
+sns.heatmap(temp_month, cmap='coolwarm', annot=True)
+plt.title("Average Daily Temperature in Delhi (1996-2017)")
+plt.show()
+
+temp_month = pd.crosstab(df['month'], df['day'], values=df['_tempm'], aggfunc='max')
+temp_day = pd.crosstab(df['day'], df['day'], values=df['_tempm'], aggfunc='max')
+plt.figure(figsize=(24, 10))
+sns.heatmap(temp_month, cmap='inferno', annot=True)
+plt.title("Maximum Daily Temperature in Delhi (1996-2017)")
+plt.show()
+
+def get_year(x): # A function to extract the year part from the datetime string
+  return x[0:4]
+df['year'] = df['datetime_utc'].apply(lambda x: get_year(str(x)))
+temp_year = pd.crosstab(df['year'], df['month'], values=df['_tempm'], aggfunc='mean')
+plt.figure(figsize=(15, 10))
+sns.heatmap(temp_year, cmap='cividis', annot=True)
+plt.title("Average Monthly Temperatures in Delhi by Year (1996-2017)")
+plt.show()
+
+# Correlations
+d=pd.read_csv('testsetf.csv')
+d.set_index(['datetime_utc'], inplace=True)
+plt.figure(figsize=(20,10))
+sns.heatmap(d.corr(numeric_only=True), annot=True)
+
+df.info()  # Other information about data
+
+d = pd.read_csv('testsetf.csv', parse_dates= ['datetime_utc'])
+d.set_index(['datetime_utc'], inplace=True)
+d.describe() #statistics
+
+data.info()
+data.columns
